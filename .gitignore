@@ -6,3 +6,5 @@ coverage
 .vscode
 .babel-cache/
 .build
+
+public/simple.js
