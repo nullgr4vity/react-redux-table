@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import TableRow from './TableRow';
 import Pagination from './Pagination';
 import Button from './Button';
 import FilterInput from './FilterInput';
 import TableHeaderItem from './TableHeaderItem';
+
+import { selectRow } from './../actions/table';
 
 const UNSELECTED = -1;
 
@@ -58,12 +61,11 @@ class Table extends React.Component {
   }
 
   onSelectRow(rowId) {
-    let value = (this.state.selectedRowId === rowId) ? UNSELECTED : rowId;
-    this.setState({
-      selectedRowId: value
-    });
+    let selectedRowId = (this.props.selectedRowId === rowId) ? UNSELECTED : rowId;
+    let { dispatch } = this.props;
+    dispatch(selectRow(selectedRowId));
 
-    if (this.props.onSelectRow) {
+    if (this.props.onSelectRow && typeof(this.props.onSelectRow) === 'function') {
       this.props.onSelectRow(rowId);
     }
   }
@@ -140,7 +142,7 @@ class Table extends React.Component {
           data={records[cri]}
           key={`row-${cri}`}
           rowId={cri}
-          selected={this.state.selectedRowId === cri}
+          selected={this.props.selectedRowId === cri}
           tools={this.props.tools}
           onDelete={this.onDeleteRow}
           onEdit={this.onEditRow}
@@ -249,7 +251,8 @@ Table.defaultProps = {
   tools: true,
   sortColumn: 0,
   sortDirection: TableHeaderItem.SORT_NOPE,
-  filterValue: ''
+  filterValue: '',
+  selectedRowId: UNSELECTED
 };
 
 Table.propTypes = {
@@ -260,6 +263,7 @@ Table.propTypes = {
   tools: React.PropTypes.bool,
   sortDirection: React.PropTypes.number,
   filterValue: React.PropTypes.string,
+  selectedRowId: React.PropTypes.number,
 
   onDeleteRow: React.PropTypes.func,
   onAddRow: React.PropTypes.func,
@@ -267,4 +271,10 @@ Table.propTypes = {
   onSelectRow: React.PropTypes.func
 };
 
-export default Table;
+function mapStateToProp(state) {
+  return {
+    selectedRowId: state.table.selectedRowId
+  }
+}
+
+export default connect(mapStateToProp)(Table);
