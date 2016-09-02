@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import Table from './../src/components/Table';
+import { configureStore } from './store';
 
 let data = [];
 for (let r = 0; r < 100; r++) {
@@ -16,4 +18,10 @@ for (let c = 0; c < 10; c++) {
   header.push(`header-${c}`);
 }
 
-ReactDOM.render(<Table data={data} header={header} page={0} />, document.getElementById('table'));
+let store = configureStore();
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Table data={data} header={header} page={0} />
+  </Provider>,
+  document.getElementById('table'));
