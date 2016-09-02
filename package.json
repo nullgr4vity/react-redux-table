@@ -14,11 +14,13 @@
   "author": "nullgr4vity <contact@nullgravity.eu>",
   "license": "MIT",
   "dependencies": {
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
+    "browserify": "^13.1.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
-    "browserify": "^13.1.0"
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
   },
   "devDependencies": {
     "babel": "^6.5.2",
