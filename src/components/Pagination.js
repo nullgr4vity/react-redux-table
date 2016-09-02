@@ -112,7 +112,7 @@ Pagination.propTypes = {
   size: React.PropTypes.number,
   pageCount: React.PropTypes.number.isRequired,
   current: React.PropTypes.number.isRequired,
-  onClick: React.PropTypes.func.isRequired
+  onClick: React.PropTypes.func
 };
 
 Pagination.defaultProps = {

@@ -73,15 +73,14 @@ PaginationItem.PLACEBO = '';
 
 PaginationItem.propTypes = {
   type: React.PropTypes.number,
-  value: React.PropTypes.string,
+  value: React.PropTypes.number,
   status: React.PropTypes.string,
   onClick: React.PropTypes.func
 };
 
 PaginationItem.defaultProps = {
   type: PaginationItem.ITEM,
-  status: PaginationItem.PLACEBO,
-  value: ''
+  status: PaginationItem.PLACEBO
 };
 
 export default PaginationItem;
