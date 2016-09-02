@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Table from './../src/Table';
+import Table from './../src/components/Table';
 
 let data = [];
 for (let r = 0; r < 100; r++) {
