@@ -43,9 +43,9 @@ class Table extends React.Component {
     let unselect = (this.state.selectedRowId === rowId) || this.state.selectedRowId < 0;
     let selectedRowIdAfterDelete = unselect ? UNSELECTED : this.state.selectedRowId;
 
-    this.state.data.splice(rowId, 1);
+    let records = [...this.props.data.slice(0, rowId), ...this.props.data.slice(rowId+1)] ;
     this.setState({
-      data: this.state.data,
+      data: records,
       selectedRowId: selectedRowIdAfterDelete
     });
 
@@ -106,7 +106,7 @@ class Table extends React.Component {
       return sd * a[colId].localeCompare(b[colId]);
     }
 
-    let records = this.state.data;
+    let records = this.props.data;
     records.sort(sortFunction);
 
     this.setState({
@@ -230,7 +230,7 @@ class Table extends React.Component {
     let pageSize = this.props.pageSize;
     let cp = this.state.currentPage;
 
-    let records = this.filterRecords(this.state.data);
+    let records = this.filterRecords(this.props.data);
     let pageCount = Math.ceil(records.length / pageSize);
 
     let header = this.prepHeader(this.props.header, this.props.tools);
