@@ -6,7 +6,7 @@ import Button from './Button';
 import FilterInput from './FilterInput';
 import TableHeaderItem from './TableHeaderItem';
 
-import { selectRow, deleteRow, changePage } from './../actions/table';
+import { selectRow, deleteRow, changePage, setFilter } from './../actions/table';
 
 const UNSELECTED = -1;
 
@@ -18,7 +18,6 @@ class Table extends React.Component {
     this.state = {
       data: this.props.data,
       currentPage: this.props.activePage,
-      filterValue: this.props.filterValue,
       selectedRowId: UNSELECTED,
       sortDirection: this.props.sortDirection,
       sortColumn: this.props.sortColumn
@@ -74,10 +73,8 @@ class Table extends React.Component {
   }
 
   onHandleFilter(value) {
-    this.setState({
-      filterValue: value,
-      currentPage: 0
-    });
+    let { dispatch } = this.props;
+    dispatch(setFilter(value));
   }
 
   onHandleSortColumn(colId) {
@@ -107,23 +104,6 @@ class Table extends React.Component {
       sortColumn: colId,
       sortDirection: (sd * scdv)
     });
-  }
-
-  filterRecords(data) {
-    let records = data;
-
-    if (this.state.filterValue !== '') {
-      records = data.filter((row) => {
-        let value = row.join();
-        if (value.indexOf(this.state.filterValue) >= 0) {
-          return value;
-        }
-
-        return false;
-      });
-    }
-
-    return records;
   }
 
   prepRows(records, cp, ps) {
@@ -223,17 +203,16 @@ class Table extends React.Component {
     let pageSize = this.props.pageSize;
     let ap = this.props.activePage;
 
-    let records = this.filterRecords(this.props.data);
-    let pageCount = Math.ceil(records.length / pageSize);
+    let pageCount = Math.ceil(this.props.data.length / pageSize);
 
     let header = this.prepHeader(this.props.header, this.props.tools);
-    let rows = this.prepRows(records, ap, pageSize);
+    let rows = this.prepRows(this.props.data, ap, pageSize);
 
     return (
       <div>
         {this.renderSectionHeader()}
         {this.renderSectionBody(header, rows)}
-        {this.renderSectionFooter(records, pageCount, pageSize)}
+        {this.renderSectionFooter(this.props.data, pageCount, pageSize)}
       </div>);
   }
 }
@@ -244,8 +223,8 @@ Table.defaultProps = {
   tools: true,
   sortColumn: 0,
   sortDirection: TableHeaderItem.SORT_NOPE,
-  filterValue: '',
-  selectedRowId: UNSELECTED
+  selectedRowId: UNSELECTED,
+  minFilterSize: 3
 };
 
 Table.propTypes = {
@@ -254,8 +233,8 @@ Table.propTypes = {
   header: React.PropTypes.arrayOf(React.PropTypes.string),
   tools: React.PropTypes.bool,
   sortDirection: React.PropTypes.number,
-  filterValue: React.PropTypes.string,
   selectedRowId: React.PropTypes.number,
+  minFilterSize: React.PropTypes.number,
 
   onDeleteRow: React.PropTypes.func,
   onAddRow: React.PropTypes.func,
@@ -263,13 +242,43 @@ Table.propTypes = {
   onSelectRow: React.PropTypes.func
 };
 
-function mapStateToProp(state) {
-  return {
-    selectedRowId: state.table.selectedRowId,
-    data: state.table.data,
-    header: state.table.header,
-    activePage: state.table.activePage
+function filterRecords(data, filterValue) {
+  let records = data;
+
+  if (filterValue !== '') {
+    records = data.filter((row) => {
+      let value = row.join();
+      if (value.indexOf(filterValue) >= 0) {
+        return value;
+      }
+
+      return false;
+    });
   }
+
+  return records;
 }
 
-export default connect(mapStateToProp)(Table);
+function shouldFilter(state, ownProps) {
+  let filterValue = state.table.filterValue || '';
+  let prevFilterValue = state.table.prevFilterValue || '';
+  let minFilterSize = ownProps.minFilterSize ? ownProps.minFilterSize : Table.defaultProps.minFilterSize;
+
+  return (filterValue.length >= minFilterSize && filterValue !== prevFilterValue);
+}
+
+function mapStateToProps(state, ownProps) {
+  let records = state.table.data;
+  if(shouldFilter(state, ownProps)) {
+    records = filterRecords(state.table.data, state.table.filterValue);
+  }
+
+  return {
+    selectedRowId: state.table.selectedRowId,
+    data: records,
+    header: state.table.header,
+    activePage: state.table.activePage
+  }                                                                                                                                                                                       
+}
+
+export default connect(mapStateToProps)(Table);

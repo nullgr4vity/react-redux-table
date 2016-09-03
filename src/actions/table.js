@@ -1,6 +1,7 @@
 export const TABLE_SELECT_ROW = 'TABLE_SELECT_ROW';
 export const TABLE_DELETE_ROW = 'TABLE_DELETE_ROW';
 export const TABLE_CHANGE_PAGE = 'TABLE_CHANGE_PAGE';
+export const TABLE_SET_FILTER = 'TABLE_SET_FILTER';
 
 export function selectRow(rowId) {
   return {
@@ -21,4 +22,11 @@ export function changePage(index) {
     type: TABLE_CHANGE_PAGE,
     activePage: index
   }
+}
+
+export function setFilter(filterValue) {
+  return {
+    type: TABLE_SET_FILTER,
+    filterValue
+  } 
 }

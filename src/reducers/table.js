@@ -1,4 +1,4 @@
-import { TABLE_SELECT_ROW, TABLE_DELETE_ROW, TABLE_CHANGE_PAGE } from './../actions/table';
+import { TABLE_SELECT_ROW, TABLE_DELETE_ROW, TABLE_CHANGE_PAGE, TABLE_SET_FILTER } from './../actions/table';
 
 export default function table(state = {}, action) {
   switch (action.type) {
@@ -17,6 +17,15 @@ export default function table(state = {}, action) {
 
     case TABLE_CHANGE_PAGE: {
       return Object.assign({}, state, { activePage: action.activePage });
+    }
+
+    case TABLE_SET_FILTER: {
+      return Object.assign({},
+        state, {
+          prevFilterValue: state.filterValue || '', 
+          filterValue: action.filterValue, 
+          activePage: 0 
+        });
     }
 
     default: {
