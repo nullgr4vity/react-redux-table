@@ -6,7 +6,7 @@ import Button from './Button';
 import FilterInput from './FilterInput';
 import TableHeaderItem from './TableHeaderItem';
 
-import { selectRow, deleteRow } from './../actions/table';
+import { selectRow, deleteRow, changePage } from './../actions/table';
 
 const UNSELECTED = -1;
 
@@ -69,9 +69,8 @@ class Table extends React.Component {
       return;
     }
 
-    this.setState({
-      currentPage: index
-    });
+    let { dispatch } = this.props;
+    dispatch(changePage(index));
   }
 
   onHandleFilter(value) {
@@ -209,7 +208,7 @@ class Table extends React.Component {
           if (records.length > pageSize) {
             return (
               <Pagination
-                current={this.state.currentPage}
+                current={this.props.page}
                 pageCount={pageCount}
                 onChange={this.onChangePageIndex}
               />);
@@ -222,7 +221,7 @@ class Table extends React.Component {
 
   render() {
     let pageSize = this.props.pageSize;
-    let cp = this.state.currentPage;
+    let cp = this.props.page;
 
     let records = this.filterRecords(this.props.data);
     let pageCount = Math.ceil(records.length / pageSize);
@@ -268,7 +267,8 @@ function mapStateToProp(state) {
   return {
     selectedRowId: state.table.selectedRowId,
     data: state.table.data,
-    header: state.table.header
+    header: state.table.header,
+    page: state.table.activePage
   }
 }
 
