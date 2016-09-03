@@ -18,10 +18,10 @@ for (let c = 0; c < 10; c++) {
   header.push(`header-${c}`);
 }
 
-let store = configureStore();
+let store = configureStore({ table: { data, header, page: 0 } });
 
 ReactDOM.render(
   <Provider store={store}>
-    <Table data={data} header={header} page={0} />
+    <Table />
   </Provider>,
   document.getElementById('table'));

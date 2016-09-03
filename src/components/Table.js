@@ -272,7 +272,9 @@ Table.propTypes = {
 
 function mapStateToProp(state) {
   return {
-    selectedRowId: state.table.selectedRowId
+    selectedRowId: state.table.selectedRowId,
+    data: state.table.data,
+    header: state.table.header
   }
 }
 
