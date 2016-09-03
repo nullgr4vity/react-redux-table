@@ -6,7 +6,7 @@ import Button from './Button';
 import FilterInput from './FilterInput';
 import TableHeaderItem from './TableHeaderItem';
 
-import { selectRow, deleteRow, changePage, setFilter } from './../actions/table';
+import { selectRow, deleteRow, changePage, setFilter, setSortDef } from './../actions/table';
 
 const UNSELECTED = -1;
 
@@ -14,14 +14,6 @@ class Table extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      data: this.props.data,
-      currentPage: this.props.activePage,
-      selectedRowId: UNSELECTED,
-      sortDirection: this.props.sortDirection,
-      sortColumn: this.props.sortColumn
-    };
 
     this.onAddNewRow = this.onAddNewRow.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
@@ -77,33 +69,23 @@ class Table extends React.Component {
     dispatch(setFilter(value));
   }
 
-  onHandleSortColumn(colId) {
+  onHandleSortColumn(columnIndex) {
     if (this.props.tools) {
-      colId -= 1;
+      columnIndex -= 1;
     }
 
-    let sd = this.state.sortDirection;
+    let sd = this.props.sortDirection;
     if (sd === TableHeaderItem.SORT_NOPE) {
       sd = TableHeaderItem.SORT_ASCENDING;
     }
 
     let scdv = 1;
-    if (this.state.sortColumn === colId) {
+    if (this.props.sortColumnIndex === columnIndex) {
       scdv = TableHeaderItem.SORT_CHANGE_DIRECTION;
     }
 
-    function sortFunction(a, b) {
-      return sd * a[colId].localeCompare(b[colId]);
-    }
-
-    let records = this.props.data;
-    records.sort(sortFunction);
-
-    this.setState({
-      data: records,
-      sortColumn: colId,
-      sortDirection: (sd * scdv)
-    });
+    let { dispatch } = this.props;
+    dispatch(setSortDef(columnIndex, sd * scdv));
   }
 
   prepRows(records, cp, ps) {
@@ -137,8 +119,8 @@ class Table extends React.Component {
 
     for (let i = 0; i < header.length; i++) {
       let sorted = TableHeaderItem.SORT_NOPE;
-      if (i === this.state.sortColumn) {
-        sorted = this.state.sortDirection;
+      if (i === this.props.sortColumnIndex) {
+        sorted = this.props.sortDirection;
       }
 
       let th = (
@@ -221,7 +203,7 @@ Table.defaultProps = {
   activePage: 0,
   pageSize: 10,
   tools: true,
-  sortColumn: 0,
+  sortColumnIndex: UNSELECTED,
   sortDirection: TableHeaderItem.SORT_NOPE,
   selectedRowId: UNSELECTED,
   minFilterSize: 3
@@ -259,6 +241,22 @@ function filterRecords(data, filterValue) {
   return records;
 }
 
+function sortRecords(data, sortColumnIndex, sortDirection) {
+
+    let records = data;
+    records.sort((a, b) => {
+      let v1 = a[sortColumnIndex];
+      let v2 = b[sortColumnIndex];
+      return sortDirection * v1.localeCompare(v2);
+    });
+
+    return records;
+}
+
+function shouldSort(state) {  
+  return (state.table.sortColumnIndex !== undefined);
+}
+
 function shouldFilter(state, ownProps) {
   let filterValue = state.table.filterValue || '';
   let prevFilterValue = state.table.prevFilterValue || '';
@@ -269,15 +267,21 @@ function shouldFilter(state, ownProps) {
 
 function mapStateToProps(state, ownProps) {
   let records = state.table.data;
-  if(shouldFilter(state, ownProps)) {
+  if (shouldFilter(state, ownProps)) {
     records = filterRecords(state.table.data, state.table.filterValue);
+  }
+
+  if (shouldSort(state)) {
+    records = sortRecords(records, state.table.sortColumnIndex, state.table.sortDirection);
   }
 
   return {
     selectedRowId: state.table.selectedRowId,
     data: records,
     header: state.table.header,
-    activePage: state.table.activePage
+    activePage: state.table.activePage,
+    sortDirection: state.table.sortDirection || TableHeaderItem.SORT_NOPE,
+    sortColumnIndex: state.table.sortColumnIndex === undefined ? UNSELECTED : state.table.sortColumnIndex
   }                                                                                                                                                                                       
 }
 
