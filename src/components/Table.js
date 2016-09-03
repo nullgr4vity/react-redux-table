@@ -258,7 +258,6 @@ Table.defaultProps = {
 Table.propTypes = {
   page: React.PropTypes.number,
   data: React.PropTypes.array.isRequired,
-  pages: React.PropTypes.number,
   header: React.PropTypes.arrayOf(React.PropTypes.string),
   tools: React.PropTypes.bool,
   sortDirection: React.PropTypes.number,
