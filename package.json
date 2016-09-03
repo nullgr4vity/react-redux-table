@@ -1,7 +1,7 @@
 {
-  "name": "react-bootstrap-table",
+  "name": "react-redux-table",
   "version": "1.0.0",
-  "description": "react bootstrap table",
+  "description": "react-redux-bootstrap table",
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint src example *.js",
