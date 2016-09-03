@@ -6,7 +6,7 @@ import Button from './Button';
 import FilterInput from './FilterInput';
 import TableHeaderItem from './TableHeaderItem';
 
-import { selectRow } from './../actions/table';
+import { selectRow, deleteRow } from './../actions/table';
 
 const UNSELECTED = -1;
 
@@ -40,14 +40,8 @@ class Table extends React.Component {
   }
 
   onDeleteRow(rowId) {
-    let unselect = (this.state.selectedRowId === rowId) || this.state.selectedRowId < 0;
-    let selectedRowIdAfterDelete = unselect ? UNSELECTED : this.state.selectedRowId;
-
-    let records = [...this.props.data.slice(0, rowId), ...this.props.data.slice(rowId+1)] ;
-    this.setState({
-      data: records,
-      selectedRowId: selectedRowIdAfterDelete
-    });
+    let { dispatch } = this.props;
+    dispatch(deleteRow(rowId));
 
     if (this.props.onDeleteRow) {
       this.props.onDeleteRow(rowId);
