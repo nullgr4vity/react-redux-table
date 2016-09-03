@@ -8,12 +8,8 @@ class FilterInput extends React.Component {
   }
 
   onKeyUp(event) {
-    if (!this.props.onKeyUp) {
-      return;
-    }
-
     let value = event.currentTarget.value;
-    if (value.length > this.props.minLengthToPropagate) {
+    if (this.props.onKeyUp) {
       this.props.onKeyUp(value);
     }
   }
@@ -27,14 +23,12 @@ class FilterInput extends React.Component {
 }
 
 FilterInput.propTypes = {
-  minLengthToPropagate: React.PropTypes.number,
   maxLength: React.PropTypes.number,
   onKeyUp: React.PropTypes.func
 };
 
 FilterInput.defaultProps = {
-  maxLength: 50,
-  minLengthToPropagate: 3
+  maxLength: 50
 };
 
 export default FilterInput;
