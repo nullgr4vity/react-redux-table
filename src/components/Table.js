@@ -17,7 +17,7 @@ class Table extends React.Component {
 
     this.state = {
       data: this.props.data,
-      currentPage: this.props.page,
+      currentPage: this.props.activePage,
       filterValue: this.props.filterValue,
       selectedRowId: UNSELECTED,
       sortDirection: this.props.sortDirection,
@@ -208,7 +208,7 @@ class Table extends React.Component {
           if (records.length > pageSize) {
             return (
               <Pagination
-                current={this.props.page}
+                current={this.props.activePage}
                 pageCount={pageCount}
                 onChange={this.onChangePageIndex}
               />);
@@ -221,13 +221,13 @@ class Table extends React.Component {
 
   render() {
     let pageSize = this.props.pageSize;
-    let cp = this.props.page;
+    let ap = this.props.activePage;
 
     let records = this.filterRecords(this.props.data);
     let pageCount = Math.ceil(records.length / pageSize);
 
     let header = this.prepHeader(this.props.header, this.props.tools);
-    let rows = this.prepRows(records, cp, pageSize);
+    let rows = this.prepRows(records, ap, pageSize);
 
     return (
       <div>
@@ -239,7 +239,7 @@ class Table extends React.Component {
 }
 
 Table.defaultProps = {
-  page: 0,
+  activePage: 0,
   pageSize: 10,
   tools: true,
   sortColumn: 0,
@@ -249,7 +249,7 @@ Table.defaultProps = {
 };
 
 Table.propTypes = {
-  page: React.PropTypes.number,
+  activePage: React.PropTypes.number,
   data: React.PropTypes.array.isRequired,
   header: React.PropTypes.arrayOf(React.PropTypes.string),
   tools: React.PropTypes.bool,
@@ -268,7 +268,7 @@ function mapStateToProp(state) {
     selectedRowId: state.table.selectedRowId,
     data: state.table.data,
     header: state.table.header,
-    page: state.table.activePage
+    activePage: state.table.activePage
   }
 }
 
