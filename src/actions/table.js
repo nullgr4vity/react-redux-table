@@ -1,6 +1,6 @@
-export const TABLE_SELECT_ROW = 'table_select_row';
-export const TABLE_DELETE_ROW = 'table_delete_row';
-export const TABLE_CHANGE_PAGE = 'TABLE_CHANGE_PAGE'
+export const TABLE_SELECT_ROW = 'TABLE_SELECT_ROW';
+export const TABLE_DELETE_ROW = 'TABLE_DELETE_ROW';
+export const TABLE_CHANGE_PAGE = 'TABLE_CHANGE_PAGE';
 
 export function selectRow(rowId) {
   return {
