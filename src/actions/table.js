@@ -7,29 +7,29 @@ export const TABLE_SET_SORT_DEF = 'TABLE_SET_SORT_DEF';
 export function selectRow(rowId) {
   return {
     type: TABLE_SELECT_ROW,
-    rowId 
-  }
+    rowId
+  };
 }
 
 export function deleteRow(rowId) {
   return {
     type: TABLE_DELETE_ROW,
     rowId
-  }
+  };
 }
 
 export function changePage(index) {
   return {
     type: TABLE_CHANGE_PAGE,
     activePage: index
-  }
+  };
 }
 
 export function setFilter(filterValue) {
   return {
     type: TABLE_SET_FILTER,
     filterValue
-  } 
+  };
 }
 
 export function setSortDef(sortColumnIndex, sortDirection) {
@@ -37,5 +37,5 @@ export function setSortDef(sortColumnIndex, sortDirection) {
     type: TABLE_SET_SORT_DEF,
     sortColumnIndex,
     sortDirection
-  }
+  };
 }
