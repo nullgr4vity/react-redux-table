@@ -50,7 +50,7 @@ class Table extends React.Component {
     let { dispatch } = this.props;
     dispatch(selectRow(selectedRowId));
 
-    if (this.props.onSelectRow && typeof(this.props.onSelectRow) === 'function') {
+    if (this.props.onSelectRow && typeof this.props.onSelectRow === 'function') {
       this.props.onSelectRow(rowId);
     }
   }
@@ -242,25 +242,25 @@ function filterRecords(data, filterValue) {
 }
 
 function sortRecords(data, sortColumnIndex, sortDirection) {
+  let records = data;
+  records.sort((a, b) => {
+    let v1 = a[sortColumnIndex];
+    let v2 = b[sortColumnIndex];
+    return sortDirection * v1.localeCompare(v2);
+  });
 
-    let records = data;
-    records.sort((a, b) => {
-      let v1 = a[sortColumnIndex];
-      let v2 = b[sortColumnIndex];
-      return sortDirection * v1.localeCompare(v2);
-    });
-
-    return records;
+  return records;
 }
 
-function shouldSort(state) {  
+function shouldSort(state) {
   return (state.table.sortColumnIndex !== undefined);
 }
 
 function shouldFilter(state, ownProps) {
   let filterValue = state.table.filterValue || '';
   let prevFilterValue = state.table.prevFilterValue || '';
-  let minFilterSize = ownProps.minFilterSize ? ownProps.minFilterSize : Table.defaultProps.minFilterSize;
+  let minFilterSize = ownProps.minFilterSize ?
+    ownProps.minFilterSize : Table.defaultProps.minFilterSize;
 
   return (filterValue.length >= minFilterSize && filterValue !== prevFilterValue);
 }
@@ -281,8 +281,9 @@ function mapStateToProps(state, ownProps) {
     header: state.table.header,
     activePage: state.table.activePage,
     sortDirection: state.table.sortDirection || TableHeaderItem.SORT_NOPE,
-    sortColumnIndex: state.table.sortColumnIndex === undefined ? UNSELECTED : state.table.sortColumnIndex
-  }                                                                                                                                                                                       
+    sortColumnIndex: state.table.sortColumnIndex === undefined ?
+      UNSELECTED : state.table.sortColumnIndex
+  };
 }
 
 export default connect(mapStateToProps)(Table);
