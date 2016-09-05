@@ -2,7 +2,7 @@ import React from 'react';
 import ReactTestUtils from 'react/lib/ReactTestUtils';
 import ReactDOM from 'react-dom';
 
-import PaginationItem from './../src/PaginationItem';
+import PaginationItem from './../src/components/PaginationItem';
 
 describe('<PaginationItem>', () => {
 
