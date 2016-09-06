@@ -7,7 +7,7 @@
     "lint": "./node_modules/.bin/eslint src example *.js",
     "coverage": "npm run lint && ./node_modules/.bin/istanbul cover ./node_modules/.bin/mocha -- --compilers js:babel-core/register",
     "tdd": "karma start karma.conf.js",
-    "test-browser": "cross-env NODE_ENV=test karma start karma.conf.js --single-run",
+    "test-browser": "cross-env NODE_ENV=test karma start karma.conf.js --single-run=false",
     "test": "npm run lint && npm run test-browser",
     "build": "npm run test && gulp"
   },
@@ -55,6 +55,8 @@
     "mocha": "^3.0.2",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
     "watchify": "^3.7.0"
