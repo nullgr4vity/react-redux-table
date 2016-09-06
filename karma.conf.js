@@ -5,11 +5,10 @@ require('babel-core/register');
 module.exports = function karma(config) {
   config.set({
     basePath: './',
-    files: ['src/**/*.js', 'test/**/*.js'],
+    files: ['test/**/*.js'],
 
     frameworks: ['browserify', 'mocha', 'chai', 'sinon-chai'],
-    browsers: ['PhantomJS'], // 'Chrome'
-
+    browsers: ['Chrome'],
     preprocessors: {
       'src/**/*.js': ['browserify'],
       'test/**/*.js': ['browserify']
