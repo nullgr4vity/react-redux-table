@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Table from './../src/components/Table';
-import { configureStore } from './store';
+import configureStore from './store';
 
 let data = [];
 for (let r = 0; r < 100; r++) {
