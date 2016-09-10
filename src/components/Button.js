@@ -17,23 +17,23 @@ class Button extends React.Component {
 
   render() {
     let value = '';
-    let cn = this.props.cn;
+    let { cn, title, type, style } = this.props;
 
-    if (this.props.title) {
-      value = this.props.title;
+    if (title) {
+      value = title;
     }
 
-    if (this.props.type === Button.EDIT) {
+    if (type === Button.EDIT) {
       value = <span className="glyphicon glyphicon-pencil" aria-hidden="true" />;
     }
 
-    if (this.props.type === Button.TRASH) {
+    if (type === Button.TRASH) {
       value = <span className="glyphicon glyphicon-trash" aria-hidden="true" />;
       cn = ' btn-danger';
     }
 
     return (
-      <a className={`btn ${cn}`} onClick={this.onClick} style={this.props.style}>{value}</a>
+      <a className={`btn ${cn}`} onClick={this.onClick} style={style}>{value}</a>
     );
   }
 }
