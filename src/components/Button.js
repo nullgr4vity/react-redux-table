@@ -50,7 +50,7 @@ Button.defaultProps = {
   cn: ' btn-default'
 };
 
-Button.EDIT = 0;
-Button.TRASH = 1;
+Button.EDIT = 'edit';
+Button.TRASH = 'trash';
 
 export default Button;
