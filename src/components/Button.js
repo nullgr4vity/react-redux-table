@@ -16,41 +16,40 @@ class Button extends React.Component {
   }
 
   render() {
-    let value = '';
-    let { cn, title, type, style } = this.props;
+    let { title, type, style } = this.props;
+    let def = { default: { cn: ' btn-primary' },
+      edit: { icon: 'pencil', cn: ' btn-default' },
+      trash: { icon: 'trash', cn: ' btn-danger' }
+    };
 
-    if (title) {
-      value = title;
-    }
-
-    if (type === Button.EDIT) {
-      value = <span className="glyphicon glyphicon-pencil" aria-hidden="true" />;
-    }
-
-    if (type === Button.TRASH) {
-      value = <span className="glyphicon glyphicon-trash" aria-hidden="true" />;
-      cn = ' btn-danger';
+    let content = title;
+    if (type !== Button.DEFAULT) {
+      content = <span className={`glyphicon glyphicon-${def[type].icon}`} aria-hidden="true" />;
     }
 
     return (
-      <a className={`btn ${cn}`} onClick={this.onClick} style={style}>{value}</a>
+      <a className={`btn ${def[type].cn}`} onClick={this.onClick} style={style}>{content}</a>
     );
   }
 }
 
+export const BUTTON_WARNING_LABEL_MISSING = 'add label !!!!';
+
+Button.DEFAULT = 'default';
+Button.EDIT = 'edit';
+Button.TRASH = 'trash';
+
 Button.propTypes = {
   cn: React.PropTypes.string,
   title: React.PropTypes.string,
-  type: React.PropTypes.number,
+  type: React.PropTypes.string,
   onClick: React.PropTypes.func
 };
 
 Button.defaultProps = {
-  title: '',
+  title: BUTTON_WARNING_LABEL_MISSING,
+  type: Button.DEFAULT,
   cn: ' btn-default'
 };
-
-Button.EDIT = 'edit';
-Button.TRASH = 'trash';
 
 export default Button;
