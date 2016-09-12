@@ -112,6 +112,8 @@ class Table extends React.Component {
   prepHeader(header, tools) {
     let output = [];
 
+    if (!header) return null;
+
     if (tools && header.length > 0) {
       let th = (<TableHeaderItem key={output.length} colId={output.length} />);
       output.push(th);
@@ -134,7 +136,7 @@ class Table extends React.Component {
       output.push(th);
     }
 
-    return output;
+    return (<tr>{output}</tr>);
   }
 
   renderSectionHeader() {
@@ -152,9 +154,7 @@ class Table extends React.Component {
       <div className="section-body">
         <table className="table table-hover table-striped">
           <thead>
-            <tr>
-              {header}
-            </tr>
+            {header}
           </thead>
           <tbody>
             {rows}
