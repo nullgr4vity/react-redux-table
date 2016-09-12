@@ -15,7 +15,6 @@ describe('<Pagination>', () => {
     );
     const pageButtons = ReactTestUtils.scryRenderedDOMComponentsWithTag(instance, 'li');
     assert.equal(pageButtons.length, 5);
-    console.log(pageButtons[2]);
     pageButtons[3].className.should.match(/\bactive\b/);
   })
 
