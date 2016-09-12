@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react/lib/ReactTestUtils';
-import Pagination from './../src/components/Pagination';
+import Pagination from './../../src/components/Pagination';
 
 describe('<Pagination>', () => {
 

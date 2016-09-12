@@ -2,7 +2,7 @@ import React from 'react';
 import ReactTestUtils from 'react/lib/ReactTestUtils';
 import ReactDOM from 'react-dom';
 
-import FilterInput from './../src/components/FilterInput';
+import FilterInput from './../../src/components/FilterInput';
 
 describe('<FilterInput>', () => {
   it('Should be correct element', () => {

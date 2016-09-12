@@ -2,8 +2,8 @@ import React from 'react';
 import ReactTestUtils from 'react/lib/ReactTestUtils';
 import ReactDOM from 'react-dom';
 
-import Button from './../src/components/Button';
-import { BUTTON_WARNING_LABEL_MISSING } from './../src/components/Button';
+import Button from './../../src/components/Button';
+import { BUTTON_WARNING_LABEL_MISSING } from './../../src/components/Button';
 
 describe('<Button>', () => {
   it('Should be element type button', () => {
