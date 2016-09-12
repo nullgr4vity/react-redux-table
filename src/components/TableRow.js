@@ -41,7 +41,7 @@ class TableRow extends React.Component {
       <TableCell value={value} key={`cell-${that.props.rowId}-${colId}`} />
     );
 
-    let tools = '';
+    let tools = null;
     if (this.props.tools) {
       tools = (
         <ToolBox rowId={this.props.rowId} onEdit={this.onEdit} onDelete={this.onDelete} />
