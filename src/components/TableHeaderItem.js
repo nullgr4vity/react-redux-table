@@ -41,7 +41,7 @@ class TableHeaderItem extends React.Component {
   render() {
     let style = {};
     let content = <span>{this.props.title}</span>;
-    if (!this.props.title) {
+    if (!this.props.title) { // this part if toolbox column
       style = { textAlign: 'center' };
       content = <span className="glyphicon glyphicon-cog" />;
     }
