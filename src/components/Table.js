@@ -170,8 +170,8 @@ class Table extends React.Component {
           if (records.length > pageSize) {
             return (
               <Pagination
-                current={this.props.activePage}
-                pageCount={pageCount}
+                active={this.props.activePage}
+                items={pageCount}
                 onChange={this.onChangePageIndex}
               />);
           }
