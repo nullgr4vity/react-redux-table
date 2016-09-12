@@ -40,7 +40,7 @@ class TableHeaderItem extends React.Component {
 
   render() {
     let style = {};
-    let content = this.props.title;
+    let content = <span>{this.props.title}</span>;
     if (!this.props.title) {
       style = { textAlign: 'center' };
       content = <span className="glyphicon glyphicon-cog" />;
