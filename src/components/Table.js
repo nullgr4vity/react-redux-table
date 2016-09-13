@@ -161,18 +161,16 @@ class Table extends React.Component {
   }
 
   render() {
-    let pageSize = this.props.pageSize;
-    let ap = this.props.activePage;
-
-    let pageCount = Math.ceil(this.props.data.length / pageSize);
-
-    let rows = this.prepRows(this.props.data, ap, pageSize);
+    let { pageSize, activePage, data } = this.props;
+    data = data || [];
+    let pageCount = Math.ceil(data.length / pageSize);
+    let rows = this.prepRows(data || [], activePage, pageSize);
 
     return (
       <div>
         {this.renderSectionHeader()}
         {this.renderSectionBody(rows)}
-        {this.renderSectionFooter(this.props.data, pageCount, pageSize)}
+        {this.renderSectionFooter(data, pageCount, pageSize)}
       </div>);
   }
 }
