@@ -84,17 +84,19 @@ class Table extends React.Component {
     dispatch(setSortDef(columnIndex, sd * scdv));
   }
 
-  prepRows(records, cp, ps) {
+  renderTBody() {
+    let { pageSize, activePage, data, selectedRowId, tools } = this.props;
+    data = data || [];
     let rows = [];
 
-    for (let i = 0, cri = cp * ps; cri < records.length && i < ps; i++, cri++) {
+    for (let i = 0, cri = activePage * pageSize; cri < data.length && i < pageSize; i++, cri++) {
       let Row = (
         <TableRow
-          data={records[cri]}
+          data={data[cri]}
           key={`row-${cri}`}
           rowId={cri}
-          selected={this.props.selectedRowId === cri}
-          tools={this.props.tools}
+          selected={selectedRowId === cri}
+          tools={tools}
           onDelete={this.onDeleteRow}
           onEdit={this.onEditRow}
           onSelect={this.onSelectRow}
@@ -102,7 +104,7 @@ class Table extends React.Component {
       rows.push(Row);
     }
 
-    return rows;
+    return (<tbody>{rows}</tbody>);
   }
 
   renderTHead() {
@@ -130,14 +132,12 @@ class Table extends React.Component {
       </div>);
   }
 
-  renderSectionBody(rows) {
+  renderSectionBody() {
     return (
       <div className="section-body">
         <table className="table table-hover table-striped">
           {this.renderTHead()}
-          <tbody>
-            {rows}
-          </tbody>
+          {this.renderTBody()}
         </table>
       </div>);
   }
@@ -161,15 +161,14 @@ class Table extends React.Component {
   }
 
   render() {
-    let { pageSize, activePage, data } = this.props;
+    let { pageSize, data } = this.props;
     data = data || [];
     let pageCount = Math.ceil(data.length / pageSize);
-    let rows = this.prepRows(data || [], activePage, pageSize);
 
     return (
       <div>
         {this.renderSectionHeader()}
-        {this.renderSectionBody(rows)}
+        {this.renderSectionBody()}
         {this.renderSectionFooter(data, pageCount, pageSize)}
       </div>);
   }
