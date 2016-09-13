@@ -105,13 +105,19 @@ class Table extends React.Component {
     return rows;
   }
 
-  prepTHead(header) {
+  renderTHead() {
+    const { header, tools } = this.props;
     let sortData = {
       columnIndex: this.props.sortColumnIndex,
       sortDirection: this.props.sortDirection
     };
 
-    return (<TableHeader cols={header} sort={sortData} onClick={this.onHandleSortColumn} />);
+    return (<TableHeader
+      cols={header}
+      sort={sortData}
+      onClick={this.onHandleSortColumn}
+      isToolbox={tools}
+    />);
   }
 
   renderSectionHeader() {
@@ -124,11 +130,11 @@ class Table extends React.Component {
       </div>);
   }
 
-  renderSectionBody(thead, rows) {
+  renderSectionBody(rows) {
     return (
       <div className="section-body">
         <table className="table table-hover table-striped">
-          {thead}
+          {this.renderTHead()}
           <tbody>
             {rows}
           </tbody>
@@ -160,13 +166,12 @@ class Table extends React.Component {
 
     let pageCount = Math.ceil(this.props.data.length / pageSize);
 
-    let thead = this.prepTHead(this.props.header, this.props.tools);
     let rows = this.prepRows(this.props.data, ap, pageSize);
 
     return (
       <div>
         {this.renderSectionHeader()}
-        {this.renderSectionBody(thead, rows)}
+        {this.renderSectionBody(rows)}
         {this.renderSectionFooter(this.props.data, pageCount, pageSize)}
       </div>);
   }
