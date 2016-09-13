@@ -142,18 +142,14 @@ class Table extends React.Component {
       </div>);
   }
 
-  renderSectionFooter() {
-    let { pageSize, activePage, data } = this.props;
-    data = data || [];
-    let pageCount = Math.ceil(data.length / pageSize);
-    
+  renderSectionFooter(records, pageCount, pageSize) {
     return (
       <div className="section-footer">
         {(() => {
-          if (data.length > pageSize) {
+          if (records.length > pageSize) {
             return (
               <Pagination
-                active={activePage}
+                active={this.props.activePage}
                 items={pageCount}
                 onChange={this.onChangePageIndex}
               />);
@@ -165,11 +161,15 @@ class Table extends React.Component {
   }
 
   render() {
+    let { pageSize, data } = this.props;
+    data = data || [];
+    let pageCount = Math.ceil(data.length / pageSize);
+
     return (
       <div>
         {this.renderSectionHeader()}
         {this.renderSectionBody()}
-        {this.renderSectionFooter()}
+        {this.renderSectionFooter(data, pageCount, pageSize)}
       </div>);
   }
 }
