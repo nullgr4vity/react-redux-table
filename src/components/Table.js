@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import TableRow from './TableRow';
+import TableRow from './table/TableRow';
 import Pagination from './Pagination';
 import Button from './Button';
 import FilterInput from './FilterInput';
-import TableHeaderItem from './TableHeaderItem';
+import TableHeaderItem from './table/TableHeaderItem';
 
 import { selectRow, deleteRow, changePage, setFilter, setSortDef } from './../actions/table';
 

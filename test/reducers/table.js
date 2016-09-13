@@ -1,6 +1,6 @@
 import reducer from '../../src/reducers/table';
 import * as actions from '../../src/actions/table';
-import TableHeaderItem from '../../src/components/TableHeaderItem';
+import TableHeaderItem from '../../src/components/table/TableHeaderItem';
 
 describe('todos reducer', () => {
   it('should return the initial state', () => {
