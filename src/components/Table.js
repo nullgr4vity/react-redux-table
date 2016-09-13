@@ -4,7 +4,7 @@ import TableRow from './table/TableRow';
 import Pagination from './Pagination';
 import Button from './Button';
 import FilterInput from './FilterInput';
-import TableHeaderItem from './table/TableHeaderItem';
+import TableHeader from './table/TableHeader';
 
 import { selectRow, deleteRow, changePage, setFilter, setSortDef } from './../actions/table';
 
@@ -70,18 +70,14 @@ class Table extends React.Component {
   }
 
   onHandleSortColumn(columnIndex) {
-    if (this.props.tools) {
-      columnIndex -= 1;
-    }
-
     let sd = this.props.sortDirection;
-    if (sd === TableHeaderItem.SORT_NOPE) {
-      sd = TableHeaderItem.SORT_ASCENDING;
+    if (sd === TableHeader.SORT_NOPE) {
+      sd = TableHeader.SORT_ASC;
     }
 
     let scdv = 1;
     if (this.props.sortColumnIndex === columnIndex) {
-      scdv = TableHeaderItem.SORT_CHANGE_DIRECTION;
+      scdv = TableHeader.SORT_CHANGE_DIRECTION;
     }
 
     let { dispatch } = this.props;
@@ -109,34 +105,13 @@ class Table extends React.Component {
     return rows;
   }
 
-  prepHeader(header, tools) {
-    let output = [];
+  prepTHead(header) {
+    let sortData = {
+      columnIndex: this.props.sortColumnIndex,
+      sortDirection: this.props.sortDirection
+    };
 
-    if (!header) return null;
-
-    if (tools && header.length > 0) {
-      let th = (<TableHeaderItem key={output.length} colId={output.length} />);
-      output.push(th);
-    }
-
-    for (let i = 0; i < header.length; i++) {
-      let sorted = TableHeaderItem.SORT_NOPE;
-      if (i === this.props.sortColumnIndex) {
-        sorted = this.props.sortDirection;
-      }
-
-      let th = (
-        <TableHeaderItem
-          sorted={sorted}
-          key={output.length}
-          colId={output.length}
-          title={header[i]}
-          onClick={this.onHandleSortColumn}
-        />);
-      output.push(th);
-    }
-
-    return (<tr>{output}</tr>);
+    return (<TableHeader cols={header} sort={sortData} onClick={this.onHandleSortColumn} />);
   }
 
   renderSectionHeader() {
@@ -149,13 +124,11 @@ class Table extends React.Component {
       </div>);
   }
 
-  renderSectionBody(header, rows) {
+  renderSectionBody(thead, rows) {
     return (
       <div className="section-body">
         <table className="table table-hover table-striped">
-          <thead>
-            {header}
-          </thead>
+          {thead}
           <tbody>
             {rows}
           </tbody>
@@ -187,13 +160,13 @@ class Table extends React.Component {
 
     let pageCount = Math.ceil(this.props.data.length / pageSize);
 
-    let header = this.prepHeader(this.props.header, this.props.tools);
+    let thead = this.prepTHead(this.props.header, this.props.tools);
     let rows = this.prepRows(this.props.data, ap, pageSize);
 
     return (
       <div>
         {this.renderSectionHeader()}
-        {this.renderSectionBody(header, rows)}
+        {this.renderSectionBody(thead, rows)}
         {this.renderSectionFooter(this.props.data, pageCount, pageSize)}
       </div>);
   }
@@ -204,7 +177,7 @@ Table.defaultProps = {
   pageSize: 10,
   tools: true,
   sortColumnIndex: UNSELECTED,
-  sortDirection: TableHeaderItem.SORT_NOPE,
+  sortDirection: TableHeader.SORT_NOPE,
   selectedRowId: UNSELECTED,
   minFilterSize: 3
 };
@@ -280,7 +253,7 @@ function mapStateToProps(state, ownProps) {
     data: records,
     header: state.table.header,
     activePage: state.table.activePage,
-    sortDirection: state.table.sortDirection || TableHeaderItem.SORT_NOPE,
+    sortDirection: state.table.sortDirection || TableHeader.SORT_NOPE,
     sortColumnIndex: state.table.sortColumnIndex === undefined ?
       UNSELECTED : state.table.sortColumnIndex
   };

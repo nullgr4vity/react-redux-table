@@ -1,6 +1,6 @@
 import reducer from '../../src/reducers/table';
 import * as actions from '../../src/actions/table';
-import TableHeaderItem from '../../src/components/table/TableHeaderItem';
+import TableHeader from '../../src/components/table/TableHeader';
 
 describe('todos reducer', () => {
   it('should return the initial state', () => {
@@ -63,11 +63,11 @@ describe('todos reducer', () => {
     expect(
       reducer({}, {
         type: actions.TABLE_SET_SORT_DEF,
-        sortDirection: TableHeaderItem.SORT_ASCENDING,
+        sortDirection: TableHeader.SORT_ASC,
         sortColumnIndex: 1
       })
     ).to.deep.equal({
-      sortDirection: TableHeaderItem.SORT_ASCENDING,
+      sortDirection: TableHeader.SORT_ASC,
       sortColumnIndex: 1
     })    
   })
