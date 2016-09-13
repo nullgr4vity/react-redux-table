@@ -36,22 +36,22 @@ class TableRow extends React.Component {
   }
 
   render() {
-    let that = this;
-    let cell = this.props.data.map((value, colId) =>
-      <TableCell value={value} key={`cell-${that.props.rowId}-${colId}`} />
+    const { data, tools, rowId, selected } = this.props;
+    let cell = data.map((value, colId) =>
+      <TableCell value={value} key={`cell-${rowId}-${colId}`} />
     );
 
-    let tools = null;
-    if (this.props.tools) {
-      tools = (
-        <ToolBox rowId={this.props.rowId} onEdit={this.onEdit} onDelete={this.onDelete} />
+    let toolbox = null;
+    if (tools) {
+      toolbox = (
+        <ToolBox rowId={rowId} onEdit={this.onEdit} onDelete={this.onDelete} />
       );
     }
 
-    let rowSelectedClass = this.props.selected ? ' success' : '';
+    let rowSelectedClass = selected ? ' success' : '';
     return (
       <tr onClick={this.onSelect} className={rowSelectedClass}>
-        {tools}
+        {toolbox}
         {cell}
       </tr>
     );
