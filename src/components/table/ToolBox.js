@@ -30,16 +30,17 @@ class ToolBox extends React.Component {
     return (
       <td style={{ textAlign: 'center' }}>
         <Button
-          type={Button.EDIT}
+          icon={Button.EDIT}
           rowId={this.props.rowId}
           onClick={this.onEdit}
           style={{ marginRight: '2px' }}
         />
 
         <Button
-          type={Button.TRASH}
+          icon={Button.TRASH}
           rowId={this.props.rowId}
           onClick={this.onDelete}
+          className={'btn-danger'}
         />
       </td>
     );

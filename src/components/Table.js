@@ -127,7 +127,7 @@ class Table extends React.Component {
       <div className="section-header">
         <FilterInput onKeyUp={this.onHandleFilter} />
         <div style={{ float: 'right' }}>
-          <Button cn={" btn-primary"} title={"Add new row"} onClick={this.onAddNewRow} />
+          <Button className={"btn-primary"} label={"Add new row"} onClick={this.onAddNewRow} />
         </div>
       </div>);
   }

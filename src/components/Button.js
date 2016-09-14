@@ -7,6 +7,9 @@ class Button extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
+  /*
+   * used mediated onClick method to stop propagate event on this level
+   */
   onClick(event) {
     event.stopPropagation();
 
@@ -15,41 +18,44 @@ class Button extends React.Component {
     }
   }
 
-  render() {
-    let { title, type, style } = this.props;
-    let def = { default: { cn: ' btn-primary' },
-      edit: { icon: 'pencil', cn: ' btn-default' },
-      trash: { icon: 'trash', cn: ' btn-danger' }
-    };
+  renderLabel(label) {
+    return label ? <span>{label}</span> : null;
+  }
 
-    let content = title;
-    if (type !== Button.DEFAULT) {
-      content = <span className={`glyphicon glyphicon-${def[type].icon}`} aria-hidden="true" />;
-    }
+  renderIcon(icon) {
+    return icon ? <span className={`glyphicon glyphicon-${icon}`} aria-hidden="true" /> : null;
+  }
+
+  render() {
+    const { label, className, icon, rowId, ...props } = this.props;
 
     return (
-      <a className={`btn ${def[type].cn}`} onClick={this.onClick} style={style}>{content}</a>
+      <button
+        type="button"
+        {...props}
+        className={`btn ${className}`}
+        onClick={this.onClick}
+      >
+        {this.renderLabel(label)}
+        {this.renderIcon(icon)}
+      </button>
     );
   }
 }
 
-export const BUTTON_WARNING_LABEL_MISSING = 'add label !!!!';
-
-Button.DEFAULT = 'default';
-Button.EDIT = 'edit';
+Button.DEFAULT = 'btn-default';
+Button.EDIT = 'pencil';
 Button.TRASH = 'trash';
 
 Button.propTypes = {
-  cn: React.PropTypes.string,
-  title: React.PropTypes.string,
-  type: React.PropTypes.string,
+  className: React.PropTypes.string,
+  label: React.PropTypes.string,
   onClick: React.PropTypes.func
 };
 
 Button.defaultProps = {
-  title: BUTTON_WARNING_LABEL_MISSING,
-  type: Button.DEFAULT,
-  cn: ' btn-default'
+  className: Button.DEFAULT,
+  label: ''
 };
 
 export default Button;
