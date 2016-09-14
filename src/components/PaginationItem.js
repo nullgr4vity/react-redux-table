@@ -8,12 +8,8 @@ class PaginationItem extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
-  empty() {
-    return;
-  }
-
   onClick() {
-    if (!this.props.onClick) {
+    if (this.props.status !== PaginationItem.PLACEBO) {
       return;
     }
 
@@ -21,21 +17,19 @@ class PaginationItem extends React.Component {
   }
 
   renderPrev() {
-    let f = (this.props.status === PaginationItem.PLACEBO) ? this.onClick : () => {};
     let cn = this.props.status;
 
     return (
-      <li className={cn} onClick={f}>
+      <li className={cn} onClick={this.onClick}>
         <a>&laquo;</a>
       </li>);
   }
 
   renderNext() {
-    let f = (this.props.status === PaginationItem.PLACEBO) ? this.onClick : () => {};
     let cn = this.props.status;
 
     return (
-      <li className={cn} onClick={f}>
+      <li className={cn} onClick={this.onClick}>
         <a>&raquo;</a>
       </li>);
   }
@@ -80,7 +74,8 @@ PaginationItem.propTypes = {
 
 PaginationItem.defaultProps = {
   type: PaginationItem.ITEM,
-  status: PaginationItem.PLACEBO
+  status: PaginationItem.PLACEBO,
+  onClick: () => {}
 };
 
 export default PaginationItem;
