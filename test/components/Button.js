@@ -86,15 +86,4 @@ describe('<Button>', () => {
     ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(instance));
   });
 
-  it('Should be capture onClick event on TRASH button', (done) => {
-    let onClick = () => {
-      done();
-    };
-
-    let instance = ReactTestUtils.renderIntoDocument(
-      <Button type={Button.EDIT} onClick={onClick}/>
-    );
-
-    ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(instance));
-  });
 });
