@@ -68,7 +68,7 @@ class Pagination extends React.Component {
       let el = (
         <PaginationItem
           status={active}
-          value={i + 1}
+          value={`${i + 1}`}
           key={i}
           pid={i}
           onClick={this.handleClickPage}
