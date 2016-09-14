@@ -8,18 +8,10 @@ describe('<PaginationItem>', () => {
 
   it('Should output node name LI', () => {
     let instance = ReactTestUtils.renderIntoDocument(
-      <PaginationItem type={PaginationItem.PREV} />
+      <PaginationItem value={PaginationItem.PREV_LABEL} />
     );
 
     expect(ReactDOM.findDOMNode(instance).nodeName).equal('LI');
-  });
-
-  it('Should be PaginationItem.ITEM by default', () => {
-    let instance = ReactTestUtils.renderIntoDocument(
-      <PaginationItem value={`test`} />
-    );
-
-    expect(instance.props.type).equal(PaginationItem.ITEM);
   });
 
   it('Should output a pagination item with value content', () => {
@@ -42,11 +34,11 @@ describe('<PaginationItem>', () => {
 
   it('Should output PREV pagination item', () => {
     let instance = ReactTestUtils.renderIntoDocument(
-      <PaginationItem type={PaginationItem.PREV} />
+      <PaginationItem value={PaginationItem.PREV_LABEL} />
     );
 
     let el = ReactTestUtils.findRenderedDOMComponentWithTag(instance, 'a');
-    expect(el.textContent).equal('«');
+    expect(el.textContent).equal(PaginationItem.PREV_LABEL);
 
     let node = ReactDOM.findDOMNode(instance);
     expect(node.getAttribute('class')).equal(PaginationItem.PLACEBO);
@@ -54,7 +46,7 @@ describe('<PaginationItem>', () => {
 
   it('Should output NEXT pagination item', () => {
     let instance = ReactTestUtils.renderIntoDocument(
-      <PaginationItem type={PaginationItem.NEXT} />
+      <PaginationItem value={PaginationItem.NEXT_LABEL} />
     );
 
     let el = ReactTestUtils.findRenderedDOMComponentWithTag(instance, 'a');
@@ -66,11 +58,11 @@ describe('<PaginationItem>', () => {
 
   it('Should output disabled NEXT pagination item', () => {
     let instance = ReactTestUtils.renderIntoDocument(
-      <PaginationItem type={PaginationItem.NEXT} status={PaginationItem.DISABLED} />
+      <PaginationItem value={PaginationItem.NEXT_LABEL} status={PaginationItem.DISABLED} />
     );
 
     let el = ReactTestUtils.findRenderedDOMComponentWithTag(instance, 'a');
-    expect(el.textContent).equal('»');
+    expect(el.textContent).equal(PaginationItem.NEXT_LABEL);
 
     let node = ReactDOM.findDOMNode(instance);
     expect(node.getAttribute('class')).to.contain(PaginationItem.DISABLED);
@@ -78,11 +70,11 @@ describe('<PaginationItem>', () => {
 
   it('Should output disabled PREV pagination item', () => {
     let instance = ReactTestUtils.renderIntoDocument(
-      <PaginationItem type={PaginationItem.PREV} status={PaginationItem.DISABLED} />
+      <PaginationItem value={PaginationItem.PREV_LABEL} status={PaginationItem.DISABLED} />
     );
 
     let el = ReactTestUtils.findRenderedDOMComponentWithTag(instance, 'a');
-    expect(el.textContent).equal('«');
+    expect(el.textContent).equal(PaginationItem.PREV_LABEL);
 
     let node = ReactDOM.findDOMNode(instance);
     expect(node.getAttribute('class')).to.contain(PaginationItem.DISABLED);
@@ -108,7 +100,7 @@ describe('<PaginationItem>', () => {
     };
 
     let instance = ReactTestUtils.renderIntoDocument(
-      <PaginationItem type={PaginationItem.PREV} onClick={onClick} />
+      <PaginationItem value={PaginationItem.PREV_LABEL} onClick={onClick} />
     );
 
     ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(instance));
@@ -127,7 +119,7 @@ describe('<PaginationItem>', () => {
 
     let instance = ReactTestUtils.renderIntoDocument(
       <PaginationItem 
-        type={PaginationItem.PREV}
+        value={PaginationItem.PREV_LABEL}
         status={PaginationItem.DISABLED}
         onClick={onClick}
       />
@@ -144,7 +136,7 @@ describe('<PaginationItem>', () => {
     };
 
     let instance = ReactTestUtils.renderIntoDocument(
-      <PaginationItem type={PaginationItem.NEXT} onClick={onClick} />
+      <PaginationItem value={PaginationItem.NEXT_LABEL} onClick={onClick} />
     );
 
     ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(instance));
@@ -163,7 +155,7 @@ describe('<PaginationItem>', () => {
 
     let instance = ReactTestUtils.renderIntoDocument(
       <PaginationItem 
-        type={PaginationItem.NEXT}
+        value={PaginationItem.NEXT_LABEL}
         status={PaginationItem.DISABLED}
         onClick={onClick}
       />

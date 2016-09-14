@@ -43,7 +43,7 @@ class Pagination extends React.Component {
       let disabled = (this.props.active === 0) ? PaginationItem.DISABLED : PaginationItem.PLACEBO;
       prev = (
         <PaginationItem
-          type={PaginationItem.PREV}
+          value={PaginationItem.PREV_LABEL}
           status={disabled}
           onClick={this.handleClickPrev}
         />);
@@ -86,7 +86,7 @@ class Pagination extends React.Component {
       let disabled = outOfSpace ? PaginationItem.DISABLED : PaginationItem.PLACEBO;
       next = (
         <PaginationItem
-          type={PaginationItem.NEXT}
+          value={PaginationItem.NEXT_LABEL}
           status={disabled}
           onClick={this.handleClickNext}
         />);
