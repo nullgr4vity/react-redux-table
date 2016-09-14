@@ -24,12 +24,16 @@ class Table extends React.Component {
     this.onHandleSortColumn = this.onHandleSortColumn.bind(this);
   }
 
+  // information about edit code is propagated outside 
+  // to allow external logic handle adding new row
   onAddNewRow() {
     if (this.props.onAddRow) {
       this.props.onAddRow();
     }
   }
 
+  // information about edit code is propagated outside 
+  // to notify external components
   onDeleteRow(rowId) {
     let { dispatch } = this.props;
     dispatch(deleteRow(rowId));
@@ -39,12 +43,16 @@ class Table extends React.Component {
     }
   }
 
+  // information about edit code is propagated outside 
+  // to handle edit logic externally
   onEditRow(rowId) {
     if (this.props.onEditRow) {
       this.props.onEditRow(rowId);
     }
   }
 
+  // information about selected row is propagated outside 
+  // in case of master-slave relation with another component
   onSelectRow(rowId) {
     let selectedRowId = (this.props.selectedRowId === rowId) ? UNSELECTED : rowId;
     let { dispatch } = this.props;
@@ -84,6 +92,20 @@ class Table extends React.Component {
     dispatch(setSortDef(columnIndex, sd * scdv));
   }
 
+/*****************************************************************  
+ * Below some methods used to render component.
+ * Short story how whole component is structed:
+ *
+ *     /-----------------------------------------/
+ *     / section header                          /
+ *     /-----------------------------------------/
+ *     / section body:                           /
+ *     / - table header                          /
+ *     / - table body                            /
+ *     /-----------------------------------------/
+ *     / section footer                          /
+ *     /-----------------------------------------/
+ *****************************************************************/
   renderTBody() {
     let { pageSize, activePage, data, selectedRowId, tools } = this.props;
     data = data || [];
