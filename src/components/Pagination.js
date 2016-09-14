@@ -51,23 +51,33 @@ class Pagination extends React.Component {
     return prev;
   }
 
-  renderIndexButtons() {
-    let pages = [];
-    let idx = 0;
-    if (this.props.active > Math.floor(this.props.size / 2)) {
-      if (this.props.active > this.props.items - Math.ceil(this.props.size / 2)) {
-        idx = this.props.items - this.props.size;
+  // calulate offset so active button will be in the middle
+  // if more items then max size of page's bar
+  calculateOffset() {
+    const { active, size, items } = this.props;
+    let offset = 0;
+    if (active > Math.floor(size / 2)) {
+      if (active > items - Math.ceil(size / 2)) {
+        offset = items - size;
       } else {
-        idx = this.props.active - Math.floor(this.props.size / 2);
+        offset = active - Math.floor(size / 2);
       }
     }
-    let size = this.props.items < 5 ? this.props.items : this.props.size;
-    for (let i = idx; i < idx + size; i++) {
-      let active = (i === this.props.active) ? PaginationItem.ACTIVE : PaginationItem.PLACEBO;
+    return offset;
+  }
+
+  renderIndexButtons() {
+    let pages = [];
+    let offset = this.calculateOffset();
+    const { size, items, active } = this.props;
+
+    let range = items < size ? items : size;
+    for (let i = offset; i < offset + range; i++) {
+      let isActive = (i === this.props.active) ? PaginationItem.ACTIVE : PaginationItem.PLACEBO;
 
       let el = (
         <PaginationItem
-          status={active}
+          status={isActive}
           value={`${i + 1}`}
           key={i}
           pid={i}
